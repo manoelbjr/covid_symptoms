@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Página de Administração</title>
+  <meta charset="utf-8">
+  <!-- MOBILE FIRST-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../css/admin.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body class="bg-secondary">
+
+  <h1 id="assunto">Lista de Sintomáticos</h1>
+  <button id="btnGetSintomaticos" type="button" class="btn btn-success" onclick="getSintomaticos()">Listar Todos</button>
+  <table class="table"> 
+    <thead>
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Endereço</th>
+        <th scope="col">Num</th>
+        <th scope="col">Bairro</th>
+        <th scope="col">Cidade</th>
+        <th scope="col">Estado</th>
+      </tr>
+    </thead>
+    <tbody id="corpo">
+
+    </tbody>
+    
+  </table>
+ 
+  <script>
+      
+      const URL_TO_FETCH = 'https://covidrn.herokuapp.com/api/sintomatico';
+
+      function getSintomaticos(){
+        fetch(URL_TO_FETCH,{method: 'get'})
+        .then(function(response){
+          // usa a resposta
+          response.json().then(function(data){
+            console.log(data); 
+            const ulSintomaticos = document.getElementById('corpo') //'sintomaticos'
+
+            let lista = data.map(function(item, indice){
+              return `
+                <tr>
+                    <td>${item.nome}</td>
+                    <td>${item.endereco}</td>
+                    <td>${item.numero}</td>
+                    <td>${item.bairro}</td>
+                    <td>${item.cidade}</td>
+                    <td>${item.uf}</td>
+                </tr>
+              `;
+            })
+            document.querySelector("#corpo").innerHTML = lista.join("");            
+          });
+        })
+        .catch(function(err){console.log('Failed retrieving information', err);});
+      }
+
+  </script>
+</body>
+</html>

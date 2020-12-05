@@ -1,0 +1,22 @@
+body{}
+
+.perguntas{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.btn-group-lg{
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.finalizar{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px 20px;
+  padding: 20px;
+}

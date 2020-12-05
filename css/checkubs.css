@@ -1,0 +1,18 @@
+#center {
+	display: flex !important;
+	justify-content: center !important;
+  align-items: center !important; /** ISSO AQUI ALINHA VERTICALMENTE */
+  flex-direction: column;
+}
+
+section{
+  padding: 15px;
+}
+
+table{
+  margin: 15px;
+}
+
+button{
+  margin: 10px !important;
+}

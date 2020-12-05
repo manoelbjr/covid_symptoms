@@ -1,0 +1,15 @@
+#center {
+	display: flex !important;
+	justify-content: center !important;
+  align-items: center !important; /** ISSO AQUI ALINHA VERTICALMENTE */
+  flex-direction: column;
+}
+body{
+  background-color: rgb(211, 224, 248) !important;
+}
+img, p{
+  padding:10px;
+}
+a{
+  margin: 10px;
+}

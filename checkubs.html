@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./css/checkubs.css">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body onload="getLast()" class="bg-dark" id="center">
+    <h1>Verifique todas as UBS da cidade informada</h1>
+    <section id="ultimo"></section>
+    <button class="btn btn-success" onclick="getUBS();">Verificar UBS</button>
+    <!-- <button type="button" class="btn btn-warning">Orientações Sobre o Coronavírus</button> -->
+    <a href="../alerta.html" class="btn btn-warning">Orientações Sobre o Coronavírus</a>
+    <section id="ubs">
+    </section>
+    
+<!-- TESTAR -->
+    <table class="table"> 
+      <thead>
+        <tr>
+          <th scope="col">Unidade</th>
+          <th scope="col">Endereço</th>
+          <th scope="col">Bairro</th>
+        </tr>
+      </thead>
+      <tbody id="corpo">
+      </tbody>
+    </table>
+<!-- ************** -->
+
+    <script src="./js/controller.js"></script>
+    <script>
+      
+      let cidade = '';
+      function getLast(){
+      const URL_TO_FETCH = 'https://covidrn.herokuapp.com/api/sintomatico/getlast';
+      fetch(URL_TO_FETCH,{method: 'get'})
+      
+        .then(function(response){
+          response.json().then(function(data){
+            //console.log(data);
+            const ultimoLista = document.getElementById('ultimo');
+
+            let listar = data.map(function(item){
+              cidade = item.cidade;
+              return`
+                <p>Olá <b>${item.nome}</b>, aqui informarei todas as Unidades Básicas de Saúde da sua cidade, <b>${item.cidade}</b> - <b>${item.uf}</b></p>          
+              `;
+            })
+            document.querySelector("#ultimo").innerHTML = listar.join("");
+          });
+        })
+        .catch(function(err){console.log('Falha ao capturar informação: ', err);});
+      }
+      
+      function getUBS(){
+        const URL_GET_CIDADE = `https://covidrn.herokuapp.com/api/ubscidade/${cidade}`;
+        //console.log(URL_GET_CIDADE);
+
+
+        fetch(URL_GET_CIDADE,{
+          method: 'get'
+        }).then(function(response){
+          response.json().then(function(data){
+            //console.log(data.rows);
+            const ultimoLista = document.getElementById('corpo');
+
+            let listaUBS = data.rows.map(function(item){
+              //console.log(item.nom_estab);
+              //return `<p>${item.nom_estab}, ${item.dsc_endereco}, ${item.dsc_bairro}</p>`;
+              return `
+                <tr>
+                  <td>${item.nom_estab}</td>
+                  <td>${item.dsc_endereco}</td>
+                  <td>${item.dsc_bairro}</td>
+                </tr>
+              `
+            })
+            document.querySelector("#corpo").innerHTML = listaUBS.join("");
+          });
+        })
+        .catch(function(err){console.log('Falha ao capturar informação: ', err);});
+      }
+
+    </script>
+  </body>
+
+</html>

@@ -1,0 +1,29 @@
+.topo{
+  display: flex;
+  justify-content: center;
+  margin: 30px 20px;
+  text-align: center;
+  text-shadow: 2px 2px 8px #343a40;
+  
+}
+
+body{
+  background-image: url("../assets/background.png");
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-position-x: -100px;
+  background-position-y: -100px;
+ 
+}
+
+.btn-exame{
+  display: flex;
+  justify-content: center;
+}
+
+#apresentacao{
+  margin-top: 100px;
+  display:flex;
+  justify-content: center;
+}
+
